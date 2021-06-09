@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Club</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+<body>
+    <h1>Welcome to the club!</h1>
+    <h3>New member</h3>
+    <form th:method="POST" th:action="@{/new-member}" th:object="${member}">
+        <label for="name">Enter name:</label>
+        <input type="text" id="name" th:field="*{name}" required><br>
+        <label for="email">Enter email:</label>
+        <input type="text" id="email" th:field="*{email}" required pattern="^.+@.+\..+$"><br>
+        <div th:if="${error}" class="errorMessage">This email is already in use. Please write another.</div>
+        <button type="submit">Add new member</button>
+        <button type="reset">Clear the form</button>
+    </form>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.getName()}"></td>
+            <td th:text="${member.getEmail()}"></td>
+            <td th:text="${member.getRegistrationDate()}"></td>
+        </tr>
+    </table>
+</body>
+</html>
